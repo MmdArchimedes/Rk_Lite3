@@ -8,7 +8,7 @@ SET day=%DATE:~8,2%
 :: 执行Git命令
 git add .
 git commit -m "%year%/%month%/%day%"
-git push origin main
+git push origin master
 
 :: 添加确认提示
 echo.
