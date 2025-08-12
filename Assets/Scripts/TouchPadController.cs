@@ -90,10 +90,4 @@ public class TouchPadController : MonoBehaviour
         commandController.SendRobotCommand(code, (uint)value, 0);
     }
 
-    IEnumerator DelayStop()
-    {
-        yield return new WaitForSeconds(1f);
-        Debug.Log("2秒后执行这里");
-        commandController.SendRobotCommand(0x21010C0A, 7, 0);
-    }
 }

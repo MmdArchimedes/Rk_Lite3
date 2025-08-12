@@ -1,4 +1,4 @@
-// DogCommandController.cs - UDP控制模块
+// UDPCommand.cs - UDP控制模块
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
