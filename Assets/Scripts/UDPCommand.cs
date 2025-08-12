@@ -7,8 +7,8 @@ using UnityEngine;
 
 public class UDPCommand : MonoBehaviour
 {
-    private int dogPort = 43893;
-    private string targetIP = "192.168.2.1";
+    private readonly int dogPort = 43893;
+    private readonly string targetIP = "192.168.2.1";
     private UdpClient udpClient;
 
     // 指令结构体
@@ -48,7 +48,7 @@ public class UDPCommand : MonoBehaviour
 
     #endregion
 
-    public void SendRobotCommand(uint c, uint p, uint t, params byte[][] parameters)
+    public void SendRobotCommand(uint c, uint p, uint t)
     {
         CommandHead head = new()
         {

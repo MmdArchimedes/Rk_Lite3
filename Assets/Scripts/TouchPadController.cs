@@ -39,24 +39,17 @@ public class TouchPadController : MonoBehaviour
         new() { key = KeyCode.RightArrow,cmdCode = 0x21010135, value = RIGHT_TURN_SPEED,label = "TouchPad控制: 右转" },
         new() { key = KeyCode.DownArrow,cmdCode = 0x21010130, value = BACKWARD_SPEED,label = "TouchPad控制: 后退" },
         new() { key = KeyCode.UpArrow,cmdCode = 0x21010130, value = FORWARD_SPEED,label = "TouchPad控制: 前进" },
-        //new() { key = KeyCode.X, cmdCode = 0x21010131, value = RIGHT_SHIFT_SPEED,label = "向右走" },
-
     };
 
     /* ----------- 内部状态 ----------- */
     private Dictionary<KeyCode, float> nextSendTimes;  // 按键下次允许发送时间
 
     /* ----------- 初始化 ----------- */
-    private void Awake()
-    {        
-        nextSendTimes = new Dictionary<KeyCode, float>();
-        foreach (var c in axisCmds) nextSendTimes[c.key] = 0f;
-
-    }
 
     private void Start()
     {
-        
+        nextSendTimes = new Dictionary<KeyCode, float>();
+        foreach (var c in axisCmds) nextSendTimes[c.key] = 0f;
     }
 
     /* ----------- 主循环 ----------- */

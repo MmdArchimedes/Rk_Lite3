@@ -125,13 +125,14 @@
       "dependencies": {},
       "url": "https://packages.unity.cn"
     },
-    "com.unity.robotics.urdf-importer": {
-      "version": "file:C:/Users/me/Desktop/URDF-Importer-main/URDF-Importer-main/com.unity.robotics.urdf-importer",
+    "com.unity.recorder": {
+      "version": "4.0.3",
       "depth": 0,
-      "source": "local",
+      "source": "registry",
       "dependencies": {
-        "com.unity.editorcoroutines": "1.0.0"
-      }
+        "com.unity.timeline": "1.0.0"
+      },
+      "url": "https://packages.unity.cn"
     },
     "com.unity.settings-manager": {
       "version": "2.0.1",

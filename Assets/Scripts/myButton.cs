@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Device;
 using UnityEngine.UI;
-public class myButton : MonoBehaviour
+public class MyButton : MonoBehaviour
 {
-
     public UDPCommand commandController;   // Inspector 中拖入已有 UDPCommand 组件
     public Text infoText;
     GameObject screen;
@@ -20,8 +19,8 @@ public class myButton : MonoBehaviour
         voice = GameObject.Find("Voice");
         canvas = GameObject.Find("Canvas");
 
-        if (screen != null) screen.SetActive(false);
-        if (gesture != null) gesture.SetActive(false);
+        if (screen != null) screen.SetActive(true);
+        if (gesture != null) gesture.SetActive(true);
         if (voice != null) voice.SetActive(false);
         if (canvas != null) canvas.SetActive(true);
     }

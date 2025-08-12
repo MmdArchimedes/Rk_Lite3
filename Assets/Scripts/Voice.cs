@@ -31,6 +31,9 @@ public class Voice : MonoBehaviour
     [Header("UI 显示")]
     public Text InfoText;
 
+    [Header("键盘测试")]
+    public bool TestMode = false;
+
     private readonly RobotVoiceCmd[] cmds = {
         //1
         new() { phrase = "起立",   pinyin = "qi li",cmdCode = 0x21010C0A, parameter = 1,  cmdType = 0 },
@@ -95,7 +98,7 @@ public class Voice : MonoBehaviour
 
     private void Update()
     {
-        //if (TestMode) RunVoiceTest();
+        if (TestMode) RunVoiceTest();
     }
 
     private void OnDestroy()
@@ -150,14 +153,6 @@ public class Voice : MonoBehaviour
         //Debug.Log($"发送机器人指令: {phrase} → 0x{cmd.cmdCode:X8}, {cmd.parameter}, {cmd.cmdType}");       
         commandController.SendRobotCommand(cmd.cmdCode, cmd.parameter, cmd.cmdType);
     }
-    public void OnGestureCommand(string phrase)
-    {
-        lookup.TryGetValue(phrase, out var cmd);
-        if (InfoText) InfoText.text = $"手势识别: {phrase}";
-        //Debug.Log($"发送机器人指令: {phrase} → 0x{cmd.cmdCode:X8}, {cmd.parameter}, {cmd.cmdType}");       
-        commandController.SendRobotCommand(cmd.cmdCode, cmd.parameter, cmd.cmdType);
-    }
-
     #endregion
 
     #region 本地键盘测试
