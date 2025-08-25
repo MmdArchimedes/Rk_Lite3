@@ -11,25 +11,26 @@ public class GesController : MonoBehaviour
     [Header("UI 显示")]
     public Text infoText;
     public Text logText;
-    public float gestureCooldown = 0.5f;
+
+    public float gestureCooldown = 0.05f;
 
     private CustomGestureType lastLeft;
     private CustomGestureType lastRight;
     private CustomGestureType currLeft;
     private CustomGestureType currRight;
+    private float curTime;
 
-    private bool isGestureOpen = false;
+    //private bool isGestureOpen = false;
 
     #region 手势类型
     // 手势类型枚举
     public enum CustomGestureType
     {
         None,
-        ThumbUp,    //打开手势发送指令
+//      ThumbUp,    //打开手势发送指令
         ShutDown_1,
         ShutDown_2,//1,2 组合手势 关闭手势发送指令
         Grip,
-        Pinch,
         OneFingerLeft,
         OneFingerRight,
         TwoFingers,
@@ -58,7 +59,7 @@ public class GesController : MonoBehaviour
     { CustomGestureType.FourSpreadBack, new GestureConfig{gestureName = "手背四指张开", action = "趴下", code = 0x21010C0A, parameters_size = 2, type = 0} },
 
     // 手心握拳 -> 软急停
-    { CustomGestureType.Pinch, new GestureConfig{gestureName = "捏合", action = "软急停", code = 0x21020C0E, parameters_size = 0, type = 0} },
+    //{ CustomGestureType.Pinch, new GestureConfig{gestureName = "捏合", action = "软急停", code = 0x21020C0E, parameters_size = 0, type = 0} },
 
     // 手背四指并拢 -> 前进
     { CustomGestureType.FourCloseBack, new GestureConfig{gestureName = "手背四指并拢", action = "前进", code = 0x21010C0A, parameters_size = 3, type = 0} },
@@ -84,6 +85,7 @@ public class GesController : MonoBehaviour
     #endregion
     void Start()
     {
+        curTime = Time.time;
         // 初始化
         lastLeft = CustomGestureType.None;
         currLeft = CustomGestureType.None;
@@ -93,53 +95,42 @@ public class GesController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        currLeft = GestureCheck(HandType.LeftHand);
-        currRight = GestureCheck(HandType.RightHand);
-        if(currLeft== CustomGestureType.ThumbUp || currRight == CustomGestureType.ThumbUp)
+        if(Time.time-curTime>gestureCooldown)
         {
-            isGestureOpen = true;
-            infoText.text = "手势打开！";
-        }            
-        if(currLeft== CustomGestureType.ShutDown_1 && currRight == CustomGestureType.ShutDown_2)
-        {
-            isGestureOpen = false;
-            infoText.text = "手势关闭！";
-        }
-        if (currLeft == CustomGestureType.ShutDown_2 && currRight == CustomGestureType.ShutDown_1)
-        {
-            isGestureOpen = false;
-            infoText.text = "手势关闭！";
-        }
-        if(isGestureOpen )
-        {
-            if (currLeft != lastLeft || currRight != lastRight)
+            currLeft = GestureCheck(HandType.LeftHand);
+            currRight = GestureCheck(HandType.RightHand);
+            if (currLeft == CustomGestureType.ShutDown_1 && currRight == CustomGestureType.ShutDown_2)
             {
-                // 检查左手是否有变化并发送指令
-                if (currLeft != lastLeft && currLeft != CustomGestureType.None)
+                //isGestureOpen = false;
+                commandController.SendRobotCommand(0x21020C0E, 0, 0);
+                infoText.text = "软急停！";
+            }
+            if (currLeft == CustomGestureType.ShutDown_2 && currRight == CustomGestureType.ShutDown_1)
+            {
+                //isGestureOpen = false;
+                commandController.SendRobotCommand(0x21020C0E, 0, 0);
+                infoText.text = "软急停！";
+            }
+            if (currLeft != CustomGestureType.None && currLeft != lastLeft)
+            {
+                if (customGestureConfigs.TryGetValue(currLeft, out var leftConfig))
                 {
-
-                    if (customGestureConfigs.TryGetValue(currLeft, out var leftConfig))
-                    {
-                        infoText.text = $"手势：{leftConfig.gestureName} 指令：{leftConfig.action}";
-                        commandController.SendRobotCommand(leftConfig.code, leftConfig.parameters_size, leftConfig.type);
-                    }
+                    infoText.text = $"左手手势：{leftConfig.gestureName} 指令：{leftConfig.action}";
+                    commandController.SendRobotCommand(leftConfig.code, leftConfig.parameters_size, leftConfig.type);
                 }
-
-                // 检查右手是否有变化并发送指令
-                if (currRight != lastRight && currRight != CustomGestureType.None)
-                {
-                    if (customGestureConfigs.TryGetValue(currRight, out var rightConfig))
-                    {
-                        infoText.text = $"手势：{rightConfig.gestureName} 指令：{rightConfig.action}";
-                        commandController.SendRobotCommand(rightConfig.code, rightConfig.parameters_size, rightConfig.type);
-                    }
-                }
-                // 更新上一次手势状态
                 lastLeft = currLeft;
+            }
+            if (currRight != CustomGestureType.None&& currRight!=lastRight)
+            {
+                if (customGestureConfigs.TryGetValue(currRight, out var rightConfig))
+                {
+                    infoText.text = $"右手手势：{rightConfig.gestureName} 指令：{rightConfig.action}";
+                    commandController.SendRobotCommand(rightConfig.code, rightConfig.parameters_size, rightConfig.type);
+                }
                 lastRight = currRight;
             }
+            curTime=Time.time;
         }
-       
     }
 
     private CustomGestureType GestureCheck(HandType hand)
@@ -156,10 +147,7 @@ public class GesController : MonoBehaviour
         //Rokid基础手势
         GestureType baseGestureType = GesEventInput.Instance.GetGestureType(hand);
 
-        if (baseGestureType == GestureType.Pinch)
-        {
-            return CustomGestureType.Pinch;
-        }
+
 
         //四指伸直
         if (isIndexExtended && isMiddleExtended && isRingExtended && isPinkyExtended)
@@ -206,9 +194,10 @@ public class GesController : MonoBehaviour
             if (indexLog.y > 0.5)
                 return CustomGestureType.ShutDown_2;
             if (indexLog.x > 0.5)
-                return CustomGestureType.OneFingerLeft;
-            if (indexLog.x < -0.5)
                 return CustomGestureType.OneFingerRight;
+            if (indexLog.x < -0.5)
+                return CustomGestureType.OneFingerLeft;
+            
         }
         else if (!isIndexExtended && !isMiddleExtended && !isRingExtended && !isPinkyExtended)
         {
@@ -222,14 +211,12 @@ public class GesController : MonoBehaviour
             {
                 Vector3 thumbLog = (GetSkeletonPose(SkeletonIndexFlag.THUMB_TIP, hand) - GetSkeletonPose(SkeletonIndexFlag.THUMB_MCP, hand)).normalized;
                 //logText.text = "大拇指法线:" + thumbLog.ToString();
-                if (thumbLog.y > 0.7) 
-                    return CustomGestureType.ThumbUp;
                 if (thumbLog.x > 0.5)
-                    return CustomGestureType.OneFingerLeft;
-                if (thumbLog.x < -0.5)
                     return CustomGestureType.OneFingerRight;
+                if (thumbLog.x < -0.5)
+                    return CustomGestureType.OneFingerLeft;
             }
-            if(!isThumbExtended)
+            else
                 return CustomGestureType.Grip;
         }
         return CustomGestureType.None;

@@ -905,7 +905,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   commandController: {fileID: 1434918933}
-  InfoText: {fileID: 0}
+  InfoText: {fileID: 1809246225}
   TestMode: 0
 --- !u!4 &930150244
 Transform:
@@ -1705,7 +1705,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1719944448
 RectTransform:
   m_ObjectHideFlags: 0

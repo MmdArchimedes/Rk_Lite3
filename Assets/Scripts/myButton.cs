@@ -30,15 +30,15 @@ public class MyButton : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Joystick1Button3))
         {
-            if (canvas.activeSelf)
+            if (voice.activeSelf)
             {
-                canvas.SetActive(false);
-                Debug.Log("关闭UI");
+                voice.SetActive(false);
+                infoText.text = ($"关闭语音");
             }
             else
             {
-                canvas.SetActive(true);
-                Debug.Log("打开UI");
+                voice.SetActive(true);
+                infoText.text = ($"打开语音");
             }
         }
     }
