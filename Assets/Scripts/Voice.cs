@@ -47,7 +47,7 @@ public class Voice : MonoBehaviour
         new() { phrase = "向左走",   pinyin = "xiang zuo zou",  cmdCode = 0x21010C0A, parameter = 5,  cmdType = 0 },
         //6
         new() { phrase = "向右走",   pinyin = "xaing you zou", cmdCode = 0x21010C0A, parameter = 6,  cmdType = 0 },
-        //7 第一种方法是语音指令中对应的停止，对不属于0x21010C0A系列的指令无效，第二种方法对所有指令生效但会回到趴下的初始状态
+        //7 
         new() { phrase = "停止",   pinyin = "ting zhi",     cmdCode = 0x21010C0A, parameter = 7,  cmdType = 0 },     
         //8
         new() { phrase = "向左转", pinyin = "xiang zuo zhuan",cmdCode = 0x21010C0A, parameter = 13, cmdType = 0 },
