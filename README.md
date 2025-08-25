@@ -1,6 +1,6 @@
 # 绝影Lite3机器狗AR控制应用
 
-<div align="center"><img src='./images/app-interface.png' width=150 alt=''> </img></div> 
+<div align="center"><img src='./images/app-interface.png' alt=''> </img></div> 
 基于Rokid AR studio设备，通过手势、语音和手柄控制云深处绝影Lite3基础版机器狗，实现对机器狗的基本行动指令与特殊动作的实时下发与控制。
 
 ## 功能特性
@@ -30,7 +30,7 @@
 - 使用控制器移动射线并按下"确认键"操作UI按钮
 - 控制机器狗切换趴下/起立、原地/移动等状态
 - 按下控制器"O"键打开/关闭语音识别功能
-<div align="center"><img src='./images/controller-operation.png' width=150 alt=''> </img></div> 
+<div align="center"><img src='./images/controller-operation.png'  alt=''> </img></div> 
 
 ### 语音指令
 按下控制器"O"键后，可使用以下语音指令：
@@ -60,7 +60,7 @@
 
 ### 手势控制
 如图为Rokid 提供的基础手势，图中一共5种手势，分别为OpenPinch、Pinch、近场单指、Palm、Grip
-<div align="center"><img src='./images/gestures.png' width=150 alt=''> </img></div> 
+<div align="center"><img src='./images/gestures.png'  alt=''> </img></div> 
 
 | 功能 | 手势动作 |
 |------|----------|
@@ -78,7 +78,7 @@
 | 打招呼 | 二指伸直 |
 以下为手势指令识别的演示视频（没有实际连接机器狗）：
 
-<div align="center"><img src='./images/gesture-test.gif' width=150 alt=''> </img></div> 
+<div align="center"><img src='./images/gesture-test.gif'> </img></div> 
 ## 开发指南
 
 ### 环境要求
@@ -137,7 +137,7 @@ GestureType gesture = GesEventInput.Instance.GetGestureType(HandType handType);
 Pose pose = GesEventInput.Instance.GetSkeletonPose(SkeletonIndexFlag flag, HandType type);
 ```
 
-<div align="center"><img src='./images/gesture-api.png' width=150 alt=''> </img></div> 
+<div align="center"><img src='./images/gesture-api.png' alt=''> </img></div> 
 ### 参考文档
 1. https://ar.rokid.com/sdk
 2. 云深处《绝影Lite3运动主机通讯接口(beta) V1.0.7》(目前没有找到公开的版本)
