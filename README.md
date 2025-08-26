@@ -151,5 +151,5 @@ Pose pose = GesEventInput.Instance.GetSkeletonPose(SkeletonIndexFlag flag, HandT
 - 保持心跳指令以不低于2Hz的频率发送以确保连接正常
 
 ## 支持
-如有问题或需要进一步技术支持，请联系作者。
-* email: <1207890259@qq.com>
+如有问题或需要进一步技术支持，请联系作者<br>
+![Static Badge](https://img.shields.io/badge/%E9%82%AE%E7%AE%B1-1207890259%40qq.com-brightgreen)
