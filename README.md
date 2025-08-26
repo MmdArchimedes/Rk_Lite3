@@ -79,6 +79,7 @@
 以下为手势指令识别的演示视频（没有实际连接机器狗）：
 
 <div align="center"><img src='./images/gesture-test.gif'> </img></div> 
+
 ## 开发指南
 
 ### 环境要求
@@ -138,6 +139,7 @@ Pose pose = GesEventInput.Instance.GetSkeletonPose(SkeletonIndexFlag flag, HandT
 ```
 
 <div align="center"><img src='./images/gesture-api.png' alt=''> </img></div> 
+
 ### 参考文档
 1. https://ar.rokid.com/sdk
 2. 云深处《绝影Lite3运动主机通讯接口(beta) V1.0.7》(目前没有找到公开的版本)
